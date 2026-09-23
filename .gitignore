@@ -15,3 +15,7 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Build manual output & file pendukung
+out/
+*.pdf
