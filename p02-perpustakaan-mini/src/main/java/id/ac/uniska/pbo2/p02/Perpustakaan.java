@@ -26,6 +26,21 @@ public class Perpustakaan {
         return null;
     }
 
+    /** Mencari koleksi yang judulnya memuat kata kunci (case-insensitive). */
+    public List<Koleksi> cariJudul(String kataKunci) {
+        List<Koleksi> hasil = new ArrayList<>();
+        if (kataKunci == null) {
+            return hasil;
+        }
+        String keywordLower = kataKunci.toLowerCase();
+        for (Koleksi k : daftarKoleksi) {
+            if (k.getJudul().toLowerCase().contains(keywordLower)) {
+                hasil.add(k);
+            }
+        }
+        return hasil;
+    }
+
     /** Meminjamkan koleksi kepada anggota. Mengembalikan false jika gagal. */
     public boolean pinjam(String kode, Anggota anggota) {
         Koleksi koleksi = cari(kode);

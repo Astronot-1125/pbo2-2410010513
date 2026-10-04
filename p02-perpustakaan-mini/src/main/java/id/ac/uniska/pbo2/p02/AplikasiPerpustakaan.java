@@ -1,5 +1,7 @@
 package id.ac.uniska.pbo2.p02;
 
+import java.util.List;
+
 /**
  * Menjalankan skenario peminjaman dan pengembalian pada Perpustakaan Mini.
  */
@@ -28,12 +30,26 @@ public class AplikasiPerpustakaan {
         System.out.println();
         System.out.println("Koleksi tersedia: " + perpus.jumlahTersedia()
                 + " dari " + perpus.getDaftarKoleksi().size());
+
+        // Pengujian Bagian D: Koleksi Skripsi dan Pencarian
+        perpus.tambah(new Skripsi("S001", "Sistem Informasi Manajemen", 2024, "Rizky Pratama", "Teknik Informatika"));
+
+        System.out.println();
+        String kataKunci = "code";
+        List<Koleksi> hasilCari = perpus.cariJudul(kataKunci);
+        System.out.println("Hasil pencarian \"" + kataKunci + "\": " + hasilCari.size() + " koleksi");
+        for (Koleksi k : hasilCari) {
+            System.out.println(k);
+        }
+
+        System.out.println();
+        cetakPinjam(perpus, "S001", siti);
     }
 
     private static void tampilkanDaftar(Perpustakaan perpus) {
         System.out.println("=== Daftar Koleksi ===");
         for (Koleksi k : perpus.getDaftarKoleksi()) {
-            System.out.println(k); // otomatis memanggil toString()
+            System.out.println(k);
         }
     }
 
