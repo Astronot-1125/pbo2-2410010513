@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>id.ac.uniska.pbo2.p03.FormPendaftaran</exec.mainClass>
+        <exec.mainClass>id.ac.uniska.pbo2.p03.FormTiketTravel</exec.mainClass>
     </properties>
 
     <dependencies>
