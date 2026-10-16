@@ -241,10 +241,10 @@ public class FormTiketTravel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox asuransiCheck;
     private javax.swing.JCheckBox bagasiCheck;
+    private javax.swing.JRadioButton bisnisRadio;
     private javax.swing.JTextArea catatanArea;
     private javax.swing.JLabel catatanLabel;
     private javax.swing.JScrollPane catatanScrollPane;
-    private javax.swing.JRadioButton bisnisRadio;
     private javax.swing.JRadioButton ekonomiRadio;
     private javax.swing.JRadioButton eksekutifRadio;
     private javax.swing.JLabel fasilitasLabel;
