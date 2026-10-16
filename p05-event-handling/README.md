@@ -14,9 +14,10 @@
 3. [Tabel Pengamatan Praktikum 2 (PengamatEvent)](#tabel-pengamatan-praktikum-2-pengamatevent)
 4. [Jawaban Eksperimen Praktikum 3 & Praktikum 4](#jawaban-eksperimen-praktikum-3--praktikum-4)
 5. [Jawaban Pertanyaan Refleksi](#jawaban-pertanyaan-refleksi)
-6. [Struktur Berkas Proyek](#struktur-berkas-proyek)
-7. [Petunjuk Menjalankan Program](#petunjuk-menjalankan-program)
-8. [Deklarasi Penggunaan AI](#deklarasi-penggunaan-ai)
+6. [Tangkapan Layar (Screenshots)](#tangkapan-layar-screenshots)
+7. [Struktur Berkas Proyek](#struktur-berkas-proyek)
+8. [Petunjuk Menjalankan Program](#petunjuk-menjalankan-program)
+9. [Deklarasi Penggunaan AI](#deklarasi-penggunaan-ai)
 
 ---
 
@@ -117,6 +118,27 @@ Berikut adalah hasil pencatatan log event pada formulir `PengamatEvent` berdasar
    - **Event Handler GUI Builder:** Digunakan sebagai standar utama dalam pengembangan `JFrame Form` NetBeans, terutama saat ingin menghubungkan event secara visual dan terdokumentasi rapi di file `.form`.
    - **Lambda Expression:** Dipakai ketika aksi berukuran ringkas (1 baris), menargetkan *functional interface* (seperti `ActionListener`), dan ditulis langsung setelah `initComponents()` di konstruktor.
    - **Method Reference (`this::namaMethod`):** Dipakai ketika aksi sudah dienkapsulasi menjadi method mandiri yang memiliki parameter dan return type yang sesuai dengan method listener, sehingga kode inisialisasi di konstruktor menjadi sangat bersih dan deklaratif.
+
+---
+
+## Tangkapan Layar (Screenshots)
+
+Berikut adalah bukti tangkapan layar pengujian event handling pada aplikasi `FormAnggotaPerpustakaan`:
+
+### 1. Tab Properties Events Tombol Daftar (NetBeans GUI Builder)
+Menunjukkan event `actionPerformed` pada tombol Daftar yang terhubung ke event handler `daftarButtonActionPerformed`:
+
+![Properties Events Tombol Daftar](Screenshot%20Action_performe.png)
+
+### 2. Dialog Ringkasan Data Pendaftaran (JOptionPane)
+Menampilkan umpan balik ringkasan seluruh data yang diinputkan pengguna saat tombol Daftar diklik:
+
+![Dialog Ringkasan Data](Screenshot%20FormAnggotaPerpustakaan.png)
+
+### 3. Dialog Konfirmasi Keluar (JOptionPane)
+Menampilkan dialog konfirmasi saat pengguna menekan tombol tutup [X] jendela, didukung pengaturan `defaultCloseOperation = DO_NOTHING_ON_CLOSE`:
+
+![Dialog Konfirmasi Keluar](Screenshot%20Keluar_Aplikasi.png)
 
 ---
 
