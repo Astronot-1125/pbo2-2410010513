@@ -14,7 +14,7 @@
 
 Berikut adalah dokumentasi foto lembar peer review heuristik kegunaan (Modul P06 Halaman 12) yang telah diuji dan dinilai oleh rekan sejawat:
 
-![Lembar Peer Review](Screenshot_Peer_Review.png)
+![Lembar Peer Review](Screenshot_Tabel.png)
 
 *(Catatan: Pengguna dapat menukar laptop/form dengan rekan sejawat, mengambil foto/scan lembar evaluasi, dan menyimpannya sebagai berkas `Screenshot_Peer_Review.png` di dalam folder ini).*
 
