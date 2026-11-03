@@ -13,7 +13,7 @@
 
 ## 1. Deskripsi Proyek `p08-uts-a`
 
-Proyek **Rekap Nilai Mahasiswa** adalah aplikasi desktop berbasis **Java Swing** dengan antarmuka modern **FlatLaf (FlatLightLaf)** yang dirancang untuk membantu dosen wali mencatat nilai mahasiswa, menghitung nilai akhir secara otomatis, menentukan huruf mutu, memvalidasi masukan pengguna, menyajikan data dalam tabel dinamis, serta menampilkan ringkasan jumlah mahasiswa dan rata-rata nilai akhir secara langsung (*real-time*).
+Proyek **Rekap Nilai Mahasiswa** adalah aplikasi desktop berbasis **Java Swing** dengan antarmuka modern **FlatLaf (FlatLightLaf)** yang dirancang untuk membantu dosen wali mencatat setiap nilai mahasiswa, menghitung nilai akhir secara otomatis, menentukan huruf mutu, memvalidasi masukan pengguna, menyajikan data dalam tabel dinamis, serta menampilkan ringkasan jumlah mahasiswa dan rata-rata nilai akhir secara langsung atau Real-Time.
 
 Aplikasi ini memenuhi seluruh ketentuan spesifikasi teknis dan fungsional UTS PBO 2 Paket A:
 - **Arsitektur Kode Terpisah (Minimal 3 Class):**
@@ -58,7 +58,7 @@ p08-uts-a/
 
 ## 3. Spesifikasi Validasi & Penanganan Masukan
 
-Aplikasi menerapkan aturan validasi masukan yang ketat sesuai spesifikasi lembar soal:
+Aplikasi ini menerapkan aturan validasi masukan yang ketat sesuai spesifikasi lembar soal seperti:
 1. **NPM Wajib Tepat 10 Digit Angka:**
    - Validasi regex `\d{10}`. Jika tidak valid, muncul pesan kesalahan: `NPM harus 10 digit angka`.
 2. **NPM Belum Ada di Tabel (Anti-Duplikasi):**
@@ -104,4 +104,3 @@ Data uji pada lembar soal berhasil diuji dan diverifikasi menggunakan JUnit 5:
    mvn compile exec:java
    ```
    Atau buka folder `p08-uts-a` di Apache NetBeans, lalu tekan tombol **Run Project (F6)**.
-
