@@ -5,7 +5,6 @@ package id.ac.uniska.pbo2.uts;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
@@ -15,8 +14,8 @@ import javax.swing.table.TableRowSorter;
 
 /**
  * JFrame Form Rekap Nilai Mahasiswa (UTS Pemrograman Berbasis Objek 2 - Paket A).
- * Didesain dengan gaya antarmuka modern FlatLaf lengkap dengan Menu Bar, Form Toolbar,
- * JTable berfitur pencarian/filter instan, tombol Hapus, perataan teks tengah pada kolom angka,
+ * Didesain dengan tata letak rapi, form input 2 baris terstruktur, tombol Simpan & Bersihkan,
+ * JTable dengan fitur pencarian instan, perataan teks tengah pada kolom angka,
  * dan status bar ringkasan.
  */
 public class RekapNilaiFrame extends javax.swing.JFrame {
@@ -132,21 +131,11 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         tombolPanel = new javax.swing.JPanel();
         simpanButton = new javax.swing.JButton();
         bersihkanButton = new javax.swing.JButton();
-        hapusButton = new javax.swing.JButton();
         cariField = new javax.swing.JTextField();
         tabelPanel = new javax.swing.JPanel();
         tabelScroll = new javax.swing.JScrollPane();
         nilaiTable = new javax.swing.JTable();
         ringkasanLabel = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        keluarItem = new javax.swing.JMenuItem();
-        nilaiMenu = new javax.swing.JMenu();
-        simpanItem = new javax.swing.JMenuItem();
-        bersihkanItem = new javax.swing.JMenuItem();
-        hapusItem = new javax.swing.JMenuItem();
-        bantuanMenu = new javax.swing.JMenu();
-        tentangItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rekap Nilai Mahasiswa");
@@ -275,10 +264,6 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         bersihkanButton.addActionListener(this::bersihkanButtonActionPerformed);
         tombolPanel.add(bersihkanButton);
 
-        hapusButton.setText("Hapus");
-        hapusButton.addActionListener(this::hapusButtonActionPerformed);
-        tombolPanel.add(hapusButton);
-
         toolbarPanel.add(tombolPanel, java.awt.BorderLayout.WEST);
 
         cariField.setColumns(22);
@@ -306,46 +291,6 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         ringkasanLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
         ringkasanLabel.setText("Jumlah mahasiswa: 0, rata-rata nilai akhir: 0,00");
         getContentPane().add(ringkasanLabel, java.awt.BorderLayout.SOUTH);
-
-        fileMenu.setMnemonic('F');
-        fileMenu.setText("File");
-
-        keluarItem.setText("Keluar");
-        keluarItem.addActionListener(this::keluarItemActionPerformed);
-        fileMenu.add(keluarItem);
-
-        jMenuBar1.add(fileMenu);
-
-        nilaiMenu.setMnemonic('N');
-        nilaiMenu.setText("Nilai");
-
-        simpanItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        simpanItem.setText("Simpan");
-        simpanItem.addActionListener(this::simpanItemActionPerformed);
-        nilaiMenu.add(simpanItem);
-
-        bersihkanItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        bersihkanItem.setText("Bersihkan");
-        bersihkanItem.addActionListener(this::bersihkanItemActionPerformed);
-        nilaiMenu.add(bersihkanItem);
-
-        hapusItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        hapusItem.setText("Hapus");
-        hapusItem.addActionListener(this::hapusItemActionPerformed);
-        nilaiMenu.add(hapusItem);
-
-        jMenuBar1.add(nilaiMenu);
-
-        bantuanMenu.setMnemonic('B');
-        bantuanMenu.setText("Bantuan");
-
-        tentangItem.setText("Tentang");
-        tentangItem.addActionListener(this::tentangItemActionPerformed);
-        bantuanMenu.add(tentangItem);
-
-        jMenuBar1.add(bantuanMenu);
-
-        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -424,31 +369,6 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         npmField.requestFocusInWindow();
     }//GEN-LAST:event_bersihkanButtonActionPerformed
 
-    private void hapusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusButtonActionPerformed
-        int barisTampilan = nilaiTable.getSelectedRow();
-        if (barisTampilan == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "Pilih baris mahasiswa pada tabel yang ingin dihapus terlebih dahulu.",
-                    "Peringatan",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        int barisModel = nilaiTable.convertRowIndexToModel(barisTampilan);
-        String namaMhs = (String) tableModel.getValueAt(barisModel, 1);
-        int konfirmasi = JOptionPane.showConfirmDialog(this,
-                "Apakah Anda yakin ingin menghapus data nilai dari \"" + namaMhs + "\"?",
-                "Konfirmasi Hapus",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (konfirmasi == JOptionPane.YES_OPTION) {
-            tableModel.hapus(barisModel);
-            perbaruiRingkasan();
-            pesanLabel.setText(" ");
-        }
-    }//GEN-LAST:event_hapusButtonActionPerformed
-
     private void cariFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariFieldKeyReleased
         String teks = cariField.getText().trim();
         if (teks.isEmpty()) {
@@ -457,29 +377,6 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(teks)));
         }
     }//GEN-LAST:event_cariFieldKeyReleased
-
-    private void keluarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarItemActionPerformed
-        dispose();
-    }//GEN-LAST:event_keluarItemActionPerformed
-
-    private void simpanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanItemActionPerformed
-        simpanButtonActionPerformed(evt);
-    }//GEN-LAST:event_simpanItemActionPerformed
-
-    private void bersihkanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bersihkanItemActionPerformed
-        bersihkanButtonActionPerformed(evt);
-    }//GEN-LAST:event_bersihkanItemActionPerformed
-
-    private void hapusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusItemActionPerformed
-        hapusButtonActionPerformed(evt);
-    }//GEN-LAST:event_hapusItemActionPerformed
-
-    private void tentangItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tentangItemActionPerformed
-        JOptionPane.showMessageDialog(this,
-                "Rekap Nilai Mahasiswa\nUTS Pemrograman Berbasis Objek 2\n\nNama: Muhammad Azka Arota Faslah\nNPM: 2410010513",
-                "Tentang Aplikasi",
-                JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_tentangItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -491,29 +388,19 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel atasPanel;
-    private javax.swing.JMenu bantuanMenu;
     private javax.swing.JButton bersihkanButton;
-    private javax.swing.JMenuItem bersihkanItem;
     private javax.swing.JTextField cariField;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel formPanel;
-    private javax.swing.JButton hapusButton;
-    private javax.swing.JMenuItem hapusItem;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem keluarItem;
     private javax.swing.JTextField namaField;
     private javax.swing.JLabel namaLabel;
-    private javax.swing.JMenu nilaiMenu;
     private javax.swing.JTable nilaiTable;
     private javax.swing.JTextField npmField;
     private javax.swing.JLabel npmLabel;
     private javax.swing.JLabel pesanLabel;
     private javax.swing.JLabel ringkasanLabel;
     private javax.swing.JButton simpanButton;
-    private javax.swing.JMenuItem simpanItem;
     private javax.swing.JPanel tabelPanel;
     private javax.swing.JScrollPane tabelScroll;
-    private javax.swing.JMenuItem tentangItem;
     private javax.swing.JPanel tombolPanel;
     private javax.swing.JPanel toolbarPanel;
     private javax.swing.JTextField tugasField;
