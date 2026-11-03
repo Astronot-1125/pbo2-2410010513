@@ -4,16 +4,22 @@ package id.ac.uniska.pbo2.uts;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  * JFrame Form Rekap Nilai Mahasiswa (UTS Pemrograman Berbasis Objek 2 - Paket A).
- * Didesain dengan tata letak modern: Header informatif di bagian atas, Form input 2-kolom responsif,
- * Tabel data nilai berukuran luas di bagian tengah, dan Panel ringkasan di bagian bawah.
+ * Didesain dengan gaya antarmuka modern FlatLaf lengkap dengan Menu Bar, Form Toolbar,
+ * JTable berfitur pencarian/filter instan, dan status bar ringkasan.
  */
 public class RekapNilaiFrame extends javax.swing.JFrame {
 
     private final NilaiTableModel tableModel = new NilaiTableModel();
+    private final TableRowSorter<NilaiTableModel> sorter = new TableRowSorter<>(tableModel);
 
     /**
      * Membuat form baru RekapNilaiFrame.
@@ -21,16 +27,17 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     public RekapNilaiFrame() {
         initComponents();
 
-        // Gaya font judul dan subjudul FlatLaf
-        judulLabel.putClientProperty("FlatLaf.styleClass", "h3");
-        keteranganLabel.putClientProperty("FlatLaf.style", "foreground: $Label.disabledForeground");
-
-        // Placeholder untuk field form
+        // Placeholder untuk field form dan pencarian
+        cariField.putClientProperty("JTextField.placeholderText", "Cari NPM atau nama...");
         npmField.putClientProperty("JTextField.placeholderText", "10 digit angka");
-        namaField.putClientProperty("JTextField.placeholderText", "Nama mahasiswa");
-        tugasField.putClientProperty("JTextField.placeholderText", "0 sampai 100");
-        utsField.putClientProperty("JTextField.placeholderText", "0 sampai 100");
-        uasField.putClientProperty("JTextField.placeholderText", "0 sampai 100");
+        namaField.putClientProperty("JTextField.placeholderText", "Nama lengkap");
+        tugasField.putClientProperty("JTextField.placeholderText", "0-100");
+        utsField.putClientProperty("JTextField.placeholderText", "0-100");
+        uasField.putClientProperty("JTextField.placeholderText", "0-100");
+
+        // Tabel sorting dan seleksi
+        nilaiTable.setRowSorter(sorter);
+        nilaiTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Styling pesan kesalahan berwarna merah
         pesanLabel.putClientProperty("FlatLaf.styleClass", "small");
@@ -40,19 +47,19 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         // Menekan Enter otomatis memicu tombol Simpan
         getRootPane().setDefaultButton(simpanButton);
 
-        // Pengaturan lebar kolom tabel agar proporsional
+        // Pengaturan lebar preferensi kolom tabel
         if (nilaiTable.getColumnModel().getColumnCount() >= 7) {
             nilaiTable.getColumnModel().getColumn(0).setPreferredWidth(120);
-            nilaiTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-            nilaiTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-            nilaiTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-            nilaiTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-            nilaiTable.getColumnModel().getColumn(5).setPreferredWidth(90);
-            nilaiTable.getColumnModel().getColumn(6).setPreferredWidth(70);
+            nilaiTable.getColumnModel().getColumn(1).setPreferredWidth(210);
+            nilaiTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+            nilaiTable.getColumnModel().getColumn(3).setPreferredWidth(75);
+            nilaiTable.getColumnModel().getColumn(4).setPreferredWidth(75);
+            nilaiTable.getColumnModel().getColumn(5).setPreferredWidth(85);
+            nilaiTable.getColumnModel().getColumn(6).setPreferredWidth(65);
         }
 
         perbaruiRingkasan();
-        setSize(920, 620);
+        setSize(860, 520);
         setLocationRelativeTo(null);
     }
 
@@ -95,49 +102,43 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        headerPanel = new javax.swing.JPanel();
-        judulLabel = new javax.swing.JLabel();
-        keteranganLabel = new javax.swing.JLabel();
-        isiPanel = new javax.swing.JPanel();
+        atasPanel = new javax.swing.JPanel();
         formPanel = new javax.swing.JPanel();
         npmLabel = new javax.swing.JLabel();
         npmField = new javax.swing.JTextField();
-        tugasLabel = new javax.swing.JLabel();
-        tugasField = new javax.swing.JTextField();
         namaLabel = new javax.swing.JLabel();
         namaField = new javax.swing.JTextField();
+        tugasLabel = new javax.swing.JLabel();
+        tugasField = new javax.swing.JTextField();
         utsLabel = new javax.swing.JLabel();
         utsField = new javax.swing.JTextField();
         uasLabel = new javax.swing.JLabel();
         uasField = new javax.swing.JTextField();
         pesanLabel = new javax.swing.JLabel();
+        toolbarPanel = new javax.swing.JPanel();
         tombolPanel = new javax.swing.JPanel();
         simpanButton = new javax.swing.JButton();
         bersihkanButton = new javax.swing.JButton();
-        tabelScrollPane = new javax.swing.JScrollPane();
+        cariField = new javax.swing.JTextField();
+        tabelPanel = new javax.swing.JPanel();
+        tabelScroll = new javax.swing.JScrollPane();
         nilaiTable = new javax.swing.JTable();
-        bawahPanel = new javax.swing.JPanel();
         ringkasanLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        keluarItem = new javax.swing.JMenuItem();
+        nilaiMenu = new javax.swing.JMenu();
+        simpanItem = new javax.swing.JMenuItem();
+        bersihkanItem = new javax.swing.JMenuItem();
+        bantuanMenu = new javax.swing.JMenu();
+        tentangItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rekap Nilai Mahasiswa");
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 8));
 
-        headerPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(14, 16, 4, 16));
-        headerPanel.setLayout(new javax.swing.BoxLayout(headerPanel, javax.swing.BoxLayout.Y_AXIS));
+        atasPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 12, 8, 12));
+        atasPanel.setLayout(new java.awt.BorderLayout(0, 8));
 
-        judulLabel.setText("Rekap Nilai Mahasiswa");
-        headerPanel.add(judulLabel);
-
-        keteranganLabel.setText("Masukkan data mahasiswa dan nilai untuk menghitung nilai akhir secara otomatis.");
-        headerPanel.add(keteranganLabel);
-
-        getContentPane().add(headerPanel, java.awt.BorderLayout.NORTH);
-
-        isiPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 16, 4, 16));
-        isiPanel.setLayout(new java.awt.BorderLayout(0, 10));
-
-        formPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
         formPanel.setLayout(new java.awt.GridBagLayout());
 
         npmLabel.setLabelFor(npmField);
@@ -146,105 +147,108 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 8);
         formPanel.add(npmLabel, gridBagConstraints);
 
-        npmField.setColumns(12);
+        npmField.setColumns(11);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 18);
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 14);
         formPanel.add(npmField, gridBagConstraints);
-
-        tugasLabel.setLabelFor(tugasField);
-        tugasLabel.setText("Nilai Tugas");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
-        formPanel.add(tugasLabel, gridBagConstraints);
-
-        tugasField.setColumns(10);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
-        formPanel.add(tugasField, gridBagConstraints);
 
         namaLabel.setLabelFor(namaField);
         namaLabel.setText("Nama");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 8);
+        formPanel.add(namaLabel, gridBagConstraints);
+
+        namaField.setColumns(14);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.45;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 14);
+        formPanel.add(namaField, gridBagConstraints);
+
+        tugasLabel.setLabelFor(tugasField);
+        tugasLabel.setText("Nilai Tugas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 8);
+        formPanel.add(tugasLabel, gridBagConstraints);
+
+        tugasField.setColumns(7);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.15;
+        formPanel.add(tugasField, gridBagConstraints);
+
+        utsLabel.setLabelFor(utsField);
+        utsLabel.setText("Nilai UTS");
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
-        formPanel.add(namaLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 8);
+        formPanel.add(utsLabel, gridBagConstraints);
 
-        namaField.setColumns(12);
+        utsField.setColumns(11);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 18);
-        formPanel.add(namaField, gridBagConstraints);
-
-        utsLabel.setLabelFor(utsField);
-        utsLabel.setText("Nilai UTS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
-        formPanel.add(utsLabel, gridBagConstraints);
-
-        utsField.setColumns(10);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 14);
         formPanel.add(utsField, gridBagConstraints);
 
         uasLabel.setLabelFor(uasField);
         uasLabel.setText("Nilai UAS");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 8);
         formPanel.add(uasLabel, gridBagConstraints);
 
-        uasField.setColumns(10);
+        uasField.setColumns(14);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        gridBagConstraints.weightx = 0.45;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 14);
         formPanel.add(uasField, gridBagConstraints);
 
         pesanLabel.setText(" ");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        gridBagConstraints.weightx = 0.15;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 0);
         formPanel.add(pesanLabel, gridBagConstraints);
+
+        atasPanel.add(formPanel, java.awt.BorderLayout.NORTH);
+
+        toolbarPanel.setLayout(new java.awt.BorderLayout(8, 0));
 
         tombolPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
 
@@ -256,30 +260,68 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         bersihkanButton.addActionListener(this::bersihkanButtonActionPerformed);
         tombolPanel.add(bersihkanButton);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
-        formPanel.add(tombolPanel, gridBagConstraints);
+        toolbarPanel.add(tombolPanel, java.awt.BorderLayout.WEST);
 
-        isiPanel.add(formPanel, java.awt.BorderLayout.NORTH);
+        cariField.setColumns(22);
+        cariField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cariFieldKeyReleased(evt);
+            }
+        });
+        toolbarPanel.add(cariField, java.awt.BorderLayout.EAST);
+
+        atasPanel.add(toolbarPanel, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(atasPanel, java.awt.BorderLayout.NORTH);
+
+        tabelPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        tabelPanel.setLayout(new java.awt.BorderLayout());
 
         nilaiTable.setModel(tableModel);
-        tabelScrollPane.setViewportView(nilaiTable);
+        tabelScroll.setViewportView(nilaiTable);
 
-        isiPanel.add(tabelScrollPane, java.awt.BorderLayout.CENTER);
+        tabelPanel.add(tabelScroll, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(isiPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(tabelPanel, java.awt.BorderLayout.CENTER);
 
-        bawahPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 16, 12, 16));
-        bawahPanel.setLayout(new java.awt.BorderLayout());
-
+        ringkasanLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
         ringkasanLabel.setText("Jumlah mahasiswa: 0, rata-rata nilai akhir: 0,00");
-        bawahPanel.add(ringkasanLabel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(ringkasanLabel, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(bawahPanel, java.awt.BorderLayout.SOUTH);
+        fileMenu.setMnemonic('F');
+        fileMenu.setText("File");
+
+        keluarItem.setText("Keluar");
+        keluarItem.addActionListener(this::keluarItemActionPerformed);
+        fileMenu.add(keluarItem);
+
+        jMenuBar1.add(fileMenu);
+
+        nilaiMenu.setMnemonic('N');
+        nilaiMenu.setText("Nilai");
+
+        simpanItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        simpanItem.setText("Simpan");
+        simpanItem.addActionListener(this::simpanItemActionPerformed);
+        nilaiMenu.add(simpanItem);
+
+        bersihkanItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        bersihkanItem.setText("Bersihkan");
+        bersihkanItem.addActionListener(this::bersihkanItemActionPerformed);
+        nilaiMenu.add(bersihkanItem);
+
+        jMenuBar1.add(nilaiMenu);
+
+        bantuanMenu.setMnemonic('B');
+        bantuanMenu.setText("Bantuan");
+
+        tentangItem.setText("Tentang");
+        tentangItem.addActionListener(this::tentangItemActionPerformed);
+        bantuanMenu.add(tentangItem);
+
+        jMenuBar1.add(bantuanMenu);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -358,6 +400,34 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         npmField.requestFocusInWindow();
     }//GEN-LAST:event_bersihkanButtonActionPerformed
 
+    private void cariFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariFieldKeyReleased
+        String teks = cariField.getText().trim();
+        if (teks.isEmpty()) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(teks)));
+        }
+    }//GEN-LAST:event_cariFieldKeyReleased
+
+    private void keluarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarItemActionPerformed
+        dispose();
+    }//GEN-LAST:event_keluarItemActionPerformed
+
+    private void simpanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanItemActionPerformed
+        simpanButtonActionPerformed(evt);
+    }//GEN-LAST:event_simpanItemActionPerformed
+
+    private void bersihkanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bersihkanItemActionPerformed
+        bersihkanButtonActionPerformed(evt);
+    }//GEN-LAST:event_bersihkanItemActionPerformed
+
+    private void tentangItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tentangItemActionPerformed
+        JOptionPane.showMessageDialog(this,
+                "Rekap Nilai Mahasiswa\nUTS Pemrograman Berbasis Objek 2\n\nNama: Muhammad Azka Arota Faslah\nNPM: 2410010513",
+                "Tentang Aplikasi",
+                JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_tentangItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -367,23 +437,30 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel bawahPanel;
+    private javax.swing.JPanel atasPanel;
+    private javax.swing.JMenu bantuanMenu;
     private javax.swing.JButton bersihkanButton;
+    private javax.swing.JMenuItem bersihkanItem;
+    private javax.swing.JTextField cariField;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel formPanel;
-    private javax.swing.JPanel headerPanel;
-    private javax.swing.JPanel isiPanel;
-    private javax.swing.JLabel judulLabel;
-    private javax.swing.JLabel keteranganLabel;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem keluarItem;
     private javax.swing.JTextField namaField;
     private javax.swing.JLabel namaLabel;
+    private javax.swing.JMenu nilaiMenu;
     private javax.swing.JTable nilaiTable;
     private javax.swing.JTextField npmField;
     private javax.swing.JLabel npmLabel;
     private javax.swing.JLabel pesanLabel;
     private javax.swing.JLabel ringkasanLabel;
     private javax.swing.JButton simpanButton;
-    private javax.swing.JScrollPane tabelScrollPane;
+    private javax.swing.JMenuItem simpanItem;
+    private javax.swing.JPanel tabelPanel;
+    private javax.swing.JScrollPane tabelScroll;
+    private javax.swing.JMenuItem tentangItem;
     private javax.swing.JPanel tombolPanel;
+    private javax.swing.JPanel toolbarPanel;
     private javax.swing.JTextField tugasField;
     private javax.swing.JLabel tugasLabel;
     private javax.swing.JTextField uasField;
