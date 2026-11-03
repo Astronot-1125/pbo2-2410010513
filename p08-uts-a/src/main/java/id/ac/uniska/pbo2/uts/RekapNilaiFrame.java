@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 
 /**
  * JFrame Form Rekap Nilai Mahasiswa (UTS Pemrograman Berbasis Objek 2 - Paket A).
+ * Didesain dengan tata letak modern: Header informatif di bagian atas, Form input 2-kolom responsif,
+ * Tabel data nilai berukuran luas di bagian tengah, dan Panel ringkasan di bagian bawah.
  */
 public class RekapNilaiFrame extends javax.swing.JFrame {
 
@@ -18,6 +20,10 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
      */
     public RekapNilaiFrame() {
         initComponents();
+
+        // Gaya font judul dan subjudul FlatLaf
+        judulLabel.putClientProperty("FlatLaf.styleClass", "h3");
+        keteranganLabel.putClientProperty("FlatLaf.style", "foreground: $Label.disabledForeground");
 
         // Placeholder untuk field form
         npmField.putClientProperty("JTextField.placeholderText", "10 digit angka");
@@ -34,19 +40,19 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         // Menekan Enter otomatis memicu tombol Simpan
         getRootPane().setDefaultButton(simpanButton);
 
-        // Pengaturan lebar preferensi kolom tabel
+        // Pengaturan lebar kolom tabel agar proporsional
         if (nilaiTable.getColumnModel().getColumnCount() >= 7) {
-            nilaiTable.getColumnModel().getColumn(0).setPreferredWidth(110);
-            nilaiTable.getColumnModel().getColumn(1).setPreferredWidth(180);
-            nilaiTable.getColumnModel().getColumn(2).setPreferredWidth(70);
-            nilaiTable.getColumnModel().getColumn(3).setPreferredWidth(70);
-            nilaiTable.getColumnModel().getColumn(4).setPreferredWidth(70);
-            nilaiTable.getColumnModel().getColumn(5).setPreferredWidth(80);
-            nilaiTable.getColumnModel().getColumn(6).setPreferredWidth(60);
+            nilaiTable.getColumnModel().getColumn(0).setPreferredWidth(120);
+            nilaiTable.getColumnModel().getColumn(1).setPreferredWidth(220);
+            nilaiTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+            nilaiTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+            nilaiTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+            nilaiTable.getColumnModel().getColumn(5).setPreferredWidth(90);
+            nilaiTable.getColumnModel().getColumn(6).setPreferredWidth(70);
         }
 
         perbaruiRingkasan();
-        setSize(880, 480);
+        setSize(920, 620);
         setLocationRelativeTo(null);
     }
 
@@ -89,13 +95,17 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        headerPanel = new javax.swing.JPanel();
+        judulLabel = new javax.swing.JLabel();
+        keteranganLabel = new javax.swing.JLabel();
+        isiPanel = new javax.swing.JPanel();
         formPanel = new javax.swing.JPanel();
         npmLabel = new javax.swing.JLabel();
         npmField = new javax.swing.JTextField();
-        namaLabel = new javax.swing.JLabel();
-        namaField = new javax.swing.JTextField();
         tugasLabel = new javax.swing.JLabel();
         tugasField = new javax.swing.JTextField();
+        namaLabel = new javax.swing.JLabel();
+        namaField = new javax.swing.JTextField();
         utsLabel = new javax.swing.JLabel();
         utsField = new javax.swing.JTextField();
         uasLabel = new javax.swing.JLabel();
@@ -104,16 +114,30 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         tombolPanel = new javax.swing.JPanel();
         simpanButton = new javax.swing.JButton();
         bersihkanButton = new javax.swing.JButton();
-        tabelPanel = new javax.swing.JPanel();
         tabelScrollPane = new javax.swing.JScrollPane();
         nilaiTable = new javax.swing.JTable();
+        bawahPanel = new javax.swing.JPanel();
         ringkasanLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rekap Nilai Mahasiswa");
-        getContentPane().setLayout(new java.awt.BorderLayout(12, 8));
+        getContentPane().setLayout(new java.awt.BorderLayout(0, 8));
 
-        formPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 8, 8));
+        headerPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(14, 16, 4, 16));
+        headerPanel.setLayout(new javax.swing.BoxLayout(headerPanel, javax.swing.BoxLayout.Y_AXIS));
+
+        judulLabel.setText("Rekap Nilai Mahasiswa");
+        headerPanel.add(judulLabel);
+
+        keteranganLabel.setText("Masukkan data mahasiswa dan nilai untuk menghitung nilai akhir secara otomatis.");
+        headerPanel.add(keteranganLabel);
+
+        getContentPane().add(headerPanel, java.awt.BorderLayout.NORTH);
+
+        isiPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 16, 4, 16));
+        isiPanel.setLayout(new java.awt.BorderLayout(0, 10));
+
+        formPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
         formPanel.setLayout(new java.awt.GridBagLayout());
 
         npmLabel.setLabelFor(npmField);
@@ -122,18 +146,37 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 12);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
         formPanel.add(npmLabel, gridBagConstraints);
 
-        npmField.setColumns(14);
+        npmField.setColumns(12);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 18);
         formPanel.add(npmField, gridBagConstraints);
+
+        tugasLabel.setLabelFor(tugasField);
+        tugasLabel.setText("Nilai Tugas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
+        formPanel.add(tugasLabel, gridBagConstraints);
+
+        tugasField.setColumns(10);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        formPanel.add(tugasField, gridBagConstraints);
 
         namaLabel.setLabelFor(namaField);
         namaLabel.setText("Nama");
@@ -141,81 +184,62 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 12);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
         formPanel.add(namaLabel, gridBagConstraints);
 
-        namaField.setColumns(14);
+        namaField.setColumns(12);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 18);
         formPanel.add(namaField, gridBagConstraints);
-
-        tugasLabel.setLabelFor(tugasField);
-        tugasLabel.setText("Nilai Tugas");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 12);
-        formPanel.add(tugasLabel, gridBagConstraints);
-
-        tugasField.setColumns(14);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
-        formPanel.add(tugasField, gridBagConstraints);
 
         utsLabel.setLabelFor(utsField);
         utsLabel.setText("Nilai UTS");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 12);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
         formPanel.add(utsLabel, gridBagConstraints);
 
-        utsField.setColumns(14);
+        utsField.setColumns(10);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
         formPanel.add(utsField, gridBagConstraints);
 
         uasLabel.setLabelFor(uasField);
         uasLabel.setText("Nilai UAS");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 12);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 10);
         formPanel.add(uasLabel, gridBagConstraints);
 
-        uasField.setColumns(14);
+        uasField.setColumns(10);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
         formPanel.add(uasField, gridBagConstraints);
 
         pesanLabel.setText(" ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -234,27 +258,28 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
         formPanel.add(tombolPanel, gridBagConstraints);
 
-        getContentPane().add(formPanel, java.awt.BorderLayout.WEST);
-
-        tabelPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 0, 8, 16));
-        tabelPanel.setLayout(new java.awt.BorderLayout());
+        isiPanel.add(formPanel, java.awt.BorderLayout.NORTH);
 
         nilaiTable.setModel(tableModel);
         tabelScrollPane.setViewportView(nilaiTable);
 
-        tabelPanel.add(tabelScrollPane, java.awt.BorderLayout.CENTER);
+        isiPanel.add(tabelScrollPane, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(tabelPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(isiPanel, java.awt.BorderLayout.CENTER);
 
-        ringkasanLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 16, 16, 16));
+        bawahPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 16, 12, 16));
+        bawahPanel.setLayout(new java.awt.BorderLayout());
+
         ringkasanLabel.setText("Jumlah mahasiswa: 0, rata-rata nilai akhir: 0,00");
-        getContentPane().add(ringkasanLabel, java.awt.BorderLayout.SOUTH);
+        bawahPanel.add(ringkasanLabel, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(bawahPanel, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -342,8 +367,13 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bawahPanel;
     private javax.swing.JButton bersihkanButton;
     private javax.swing.JPanel formPanel;
+    private javax.swing.JPanel headerPanel;
+    private javax.swing.JPanel isiPanel;
+    private javax.swing.JLabel judulLabel;
+    private javax.swing.JLabel keteranganLabel;
     private javax.swing.JTextField namaField;
     private javax.swing.JLabel namaLabel;
     private javax.swing.JTable nilaiTable;
@@ -352,7 +382,6 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     private javax.swing.JLabel pesanLabel;
     private javax.swing.JLabel ringkasanLabel;
     private javax.swing.JButton simpanButton;
-    private javax.swing.JPanel tabelPanel;
     private javax.swing.JScrollPane tabelScrollPane;
     private javax.swing.JPanel tombolPanel;
     private javax.swing.JTextField tugasField;
@@ -363,4 +392,3 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     private javax.swing.JLabel utsLabel;
     // End of variables declaration//GEN-END:variables
 }
-
