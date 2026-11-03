@@ -104,3 +104,4 @@ Data uji pada lembar soal berhasil diuji dan diverifikasi menggunakan JUnit 5:
    mvn compile exec:java
    ```
    Atau buka folder `p08-uts-a` di Apache NetBeans, lalu tekan tombol **Run Project (F6)**.
+

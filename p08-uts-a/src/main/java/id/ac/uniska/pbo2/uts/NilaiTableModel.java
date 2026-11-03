@@ -97,3 +97,4 @@ public class NilaiTableModel extends AbstractTableModel {
         return daftar;
     }
 }
+

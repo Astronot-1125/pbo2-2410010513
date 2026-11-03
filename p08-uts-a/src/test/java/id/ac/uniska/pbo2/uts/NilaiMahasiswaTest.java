@@ -84,3 +84,4 @@ public class NilaiMahasiswaTest {
         assertFalse(model.apakahNpmSudahAda("2410010999"));
     }
 }
+

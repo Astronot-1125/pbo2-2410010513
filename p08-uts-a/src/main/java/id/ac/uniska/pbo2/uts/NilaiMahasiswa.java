@@ -86,3 +86,4 @@ public class NilaiMahasiswa {
         return String.format(Locale.forLanguageTag("id-ID"), "%.2f", hitungNilaiAkhir());
     }
 }
+

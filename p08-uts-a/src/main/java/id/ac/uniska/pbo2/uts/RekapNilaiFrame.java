@@ -363,3 +363,4 @@ public class RekapNilaiFrame extends javax.swing.JFrame {
     private javax.swing.JLabel utsLabel;
     // End of variables declaration//GEN-END:variables
 }
+
