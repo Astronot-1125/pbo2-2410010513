@@ -21,7 +21,7 @@ Aplikasi ini memenuhi seluruh ketentuan spesifikasi teknis dan fungsional UTS PB
      $$\text{Nilai Akhir} = (30\% \times \text{Tugas}) + (30\% \times \text{UTS}) + (40\% \times \text{UAS})$$
      serta konversi huruf mutu (A, B+, B, C+, C, D, E) dan format desimal dua angka di belakang koma (format lokal Indonesia: koma `,`).
   2. `NilaiTableModel.java`: Class model tabel turunan `AbstractTableModel` yang menampung daftar data mahasiswa dalam `List<NilaiMahasiswa>`, memetakan ke 7 kolom (`NPM`, `Nama`, `Tugas`, `UTS`, `UAS`, `Akhir`, `Huruf`), memeriksa keunikan NPM, serta menghitung jumlah mahasiswa dan rata-rata nilai akhir.
-  3. `RekapNilaiFrame.java` & `RekapNilaiFrame.form`: Form jendela utama (`JFrame Form` NetBeans GUI Builder) yang menyusun komponen UI, mengelola event penekanan tombol Simpan dan Bersihkan, tombol default Enter pada root pane, umpan balik validasi, serta pembaruan tampilan ringkasan.
+  3. `RekapNilaiFrame.java` & `RekapNilaiFrame.form`: Form jendela utama (`JFrame Form` NetBeans GUI Builder) yang menyusun komponen UI secara terstruktur, mengelola event penekanan tombol Simpan dan Bersihkan, tombol default Enter pada root pane, umpan balik validasi visual, perataan teks tengah (*center*) pada kolom data angka tabel, serta pembaruan tampilan ringkasan secara instan.
 
 ---
 
@@ -75,6 +75,8 @@ Aplikasi ini menerapkan aturan validasi masukan yang ketat sesuai spesifikasi le
    - Pesan kesalahan tampil pada label berwarna merah di dekat form.
    - Kursor otomatis diarahkan ke input yang salah (`requestFocusInWindow()` dan seleksi teks).
    - Isian form lainnya **tetap dipertahankan (tidak terhapus)**.
+6. **Perataan Teks Tabel:**
+   - Kolom data angka (Tugas, UTS, UAS, Akhir) beserta NPM dan Huruf Mutu diformat rata tengah (*center*) agar tampilan tabel simetris dan mudah dibaca.
 
 ---
 
