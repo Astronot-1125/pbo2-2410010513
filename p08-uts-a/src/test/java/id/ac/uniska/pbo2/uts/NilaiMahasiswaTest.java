@@ -82,6 +82,12 @@ public class NilaiMahasiswaTest {
         assertTrue(model.apakahNpmSudahAda("2410010001"));
         assertTrue(model.apakahNpmSudahAda("2410010002"));
         assertFalse(model.apakahNpmSudahAda("2410010999"));
+
+        // Uji fungsi hapus data
+        model.hapus(1); // hapus baris Budi Santoso
+        assertEquals(2, model.getRowCount());
+        assertFalse(model.apakahNpmSudahAda("2410010002"));
+        assertEquals("2410010003", model.getValueAt(1, 0));
     }
 }
 

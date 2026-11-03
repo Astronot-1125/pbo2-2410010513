@@ -62,6 +62,13 @@ public class NilaiTableModel extends AbstractTableModel {
         fireTableRowsInserted(indeksBaru, indeksBaru);
     }
 
+    public void hapus(int indeks) {
+        if (indeks >= 0 && indeks < daftar.size()) {
+            daftar.remove(indeks);
+            fireTableRowsDeleted(indeks, indeks);
+        }
+    }
+
     public boolean apakahNpmSudahAda(String npm) {
         for (NilaiMahasiswa m : daftar) {
             if (m.getNpm().trim().equals(npm.trim())) {
